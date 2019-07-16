@@ -52,7 +52,7 @@ M臃肿或者C臃肿都不是理想的效果（解耦方面考虑），有人就
 
 iOS应用所有的视图都是通过UIViewController承载的，由于UIViewController继承自UIView，本身与View难以脱离关系。所以VC的位置就处在一个V和C之间的比较尴尬的位置。MVVM的提出让问题得到了解决。
 
-MVVM是分为M-VM-V|VC三层的，VM用于承担原始数据重新加工的工作、以及业务逻辑，达到了为Controller或者Model减负的目的。VC也是属于V这一个层级。
+MVVM是分为M-VM-V&VC三层的，VM用于承担原始数据重新加工的工作、以及业务逻辑，达到了为Controller或者Model减负的目的。VC也是属于V这一个层级。
 
 根据MVC中的经典规则--“M与V不直接通信”，所以VM层也需要通过C来更新View，同时View处理事件更新M层的数据的时候也要经过C。在MVVM中，规则还是不变，只是中间层变为了VM。
 
