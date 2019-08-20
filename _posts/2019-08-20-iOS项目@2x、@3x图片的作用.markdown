@@ -1,0 +1,62 @@
+---
+layout: post
+title:  "iOS项目@2x、@3x图片的作用"
+date:   2019-08-20 15:30:00 +0800
+categories: iOS开发
+---
+
+### iOS项目@2x、@3x图片的作用
+> 项目中的资源图片一般需要设计提供@2x、@3x两套图片，那么为什么需要两套图呢。
+
+#### 疑惑点
+
+##### 如果只提供@3x的图， 会怎么样？
+
+* 只提供一套图APP也能完整地显示图像。 
+* 只提供@2x，那么在@3x的设备上会自动放大，这样会导致图像变模糊。
+* 只提供@3x，那么在@2x的设备上回自动缩小，但是@3x上的1像素不会被缩小到0.66像素，而可能会丢失。所以最终导致的结果是图片的细节丢失，达不到想要的效果。
+
+##### 只提供一套@3x图是否能减少安装包的体积？
+
+* 不能，反而会增加安装包体积
+
+* 因为iOS9 开始， Xcode的App Thinning功能会根据设备类型加载对应的资源。 也就是说按照下面的表格，如果同时提供了@2x和@3x的图片，对于iphone 5s 的安装包只会包含@2x的图片， 对应iphoneX的安装包只会包含 @3x 的图片。
+
+* 另外，如果只提供了@3x的图片，由于找不到匹配的图，所有的设备安装包都会包含@3x的图片，对于@2x类型的设备来说反而导致安装包的尺寸变大。
+
+
+#### 测试方法
+
+> 需要用到查看.car文件的工具[链接](https://github.com/devcxm/iOS-Images-Extractor.git)
+
+##### 方法一
+achieve之后，import为对应的设备类型的ipa包，改为.zip之后解压，查看对应的资源图片。
+
+##### 方法二
+直接选择对应的模拟器或者真机运行，然后Products文件夹中找到.app文件，也可以查看资源图片。
+
+
+
+#### 其他参考资料
+
+[App thinning without @3x images](https://stackoverflow.com/questions/33250182/app-thinning-without-3x-images-and-when-some-images-are-jpgs)
+
+不同设备类型对应的设备类型,参考[apple设计指南](https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/image-size-and-resolution/)
+
+* 12.9" iPad Pro	@2x
+* 11" iPad Pro	@2x
+* 10.5" iPad Pro	@2x
+* 9.7" iPad	@2x
+* 7.9" iPad mini 4	@2x
+* iPhone XS Max	@3x
+* iPhone XS	@3x
+* iPhone XR	@2x
+* iPhone X	@3x
+* iPhone 8 Plus	@3x
+* iPhone 8	@2x
+* iPhone 7 Plus	@3x
+* iPhone 7	@2x
+* iPhone 6s Plus	@3x
+* iPhone 6s	@2x
+* iPhone SE	@2x
+
